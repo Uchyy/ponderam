@@ -1,5 +1,7 @@
 
 export const siteContent = {
+  contactEmail: "hello@ponderam.com",
+  buyMeACoffeeUrl: "https://buymeacoffee.com/Uchyy",
   about: {
     eyebrow: "GET TO KNOW US",
     title: "Same Letters, Different Minds.",

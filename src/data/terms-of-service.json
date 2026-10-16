@@ -1,0 +1,83 @@
+
+{
+  "title": "Terms of Service",
+  "lastUpdated": "16 October 2026",
+  "intro": "Welcome to Ponderam. By accessing or using Ponderam, you agree to these Terms of Service. If you do not agree, please do not use the service.",
+  "sections": [
+    {
+      "heading": "1. About Ponderam",
+      "paragraphs": [
+        "Ponderam is a word and category game that may include solo play, multiplayer rooms, scoring, marking, and public leaderboards.",
+        "Features may change as we improve the game. We may add, modify, suspend, or discontinue features where reasonably necessary."
+      ]
+    },
+    {
+      "heading": "2. Accounts",
+      "paragraphs": [
+        "You are responsible for providing accurate account information and keeping your sign-in credentials secure.",
+        "You must not impersonate another person, misuse another player's account, or attempt to gain unauthorised access to Ponderam or its systems."
+      ]
+    },
+    {
+      "heading": "3. Game rules and fair play",
+      "paragraphs": [
+        "All players must follow the Ponderam Game Rules, including applicable rules for answers, submissions, marking, scoring, and multiplayer conduct.",
+        "You must not exploit bugs, manipulate scores, interfere with other players' games, or use unauthorised methods to obtain an unfair advantage.",
+        "Where a dispute or suspected abuse arises, we may review relevant game information and take reasonable action to protect fair play."
+      ],
+      "links": [
+        {
+          "label": "Read the Ponderam Game Rules",
+          "href": "#rules"
+        }
+      ]
+    },
+    {
+      "heading": "4. Usernames and avatars",
+      "paragraphs": [
+        "You must not use usernames or avatars that are unlawful, impersonate others, or are abusive or otherwise inappropriate.",
+        "Your username, avatar, and total score may appear on the public leaderboard, including to visitors who are not signed in."
+      ]
+    },
+    {
+      "heading": "5. Scores and leaderboard",
+      "paragraphs": [
+        "Scores, rankings, streaks, and other game statistics are provided for gameplay purposes. Rankings may change as scores are updated or game records are corrected.",
+        "We may correct scoring errors or address manipulation to maintain fair and reliable gameplay."
+      ]
+    },
+    {
+      "heading": "6. Acceptable use",
+      "paragraphs": [
+        "You must not disrupt the service, attempt to bypass security controls, introduce malicious code, or access data you are not authorised to access.",
+        "You must not use Ponderam in a way that violates applicable laws or infringes another person's rights."
+      ]
+    },
+    {
+      "heading": "7. Suspension and termination",
+      "paragraphs": [
+        "We may restrict or suspend access where reasonably necessary to address abuse, security risks, violations of these terms, or legal requirements.",
+        "You may stop using Ponderam at any time. For account-related requests, contact hello@ponderam.com."
+      ]
+    },
+    {
+      "heading": "8. Availability and disclaimers",
+      "paragraphs": [
+        "Ponderam is provided on an as-available basis. We cannot guarantee uninterrupted access, error-free gameplay, or that every score or game record will always be available.",
+        "Nothing in these terms excludes or limits liability where doing so would be unlawful."
+      ]
+    },
+    {
+      "heading": "9. Changes to these terms",
+      "paragraphs": [
+        "We may update these terms as the service develops. The latest version and its update date will be published on this page. Continued use after an update takes effect means you accept the revised terms to the extent permitted by law."
+      ]
+    },
+    {
+      "heading": "10. Contact",
+      "paragraphs": [
+        "Questions about these terms can be sent to hello@ponderam.com."
+      ]
+    }
+  ]
+}

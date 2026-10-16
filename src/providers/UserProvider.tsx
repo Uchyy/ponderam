@@ -30,20 +30,23 @@ export function UserProvider({ children }: UserProviderProps) {
     if (authLoading) return;
 
     if (!authUser) {
-      setUser(null);
-      setLoading(false);
-      return;
+        setUser(null);
+        setLoading(false);
+        return;
     }
 
     setLoading(true);
 
     try {
-      const profile = await userRepository.getById(authUser.id);
-      setUser(profile);
+        const profile = await userRepository.getById(authUser.id);
+        setUser(profile);
+    } catch (error) {
+        console.error("Could not refresh user profile:", error);
+        throw error;
     } finally {
-      setLoading(false);
+        setLoading(false);
     }
-  }, [authUser, authLoading]);
+    }, [authUser, authLoading]);
 
   useEffect(() => {
     let cancelled = false;

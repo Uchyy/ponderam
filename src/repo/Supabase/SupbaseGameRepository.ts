@@ -279,31 +279,31 @@ export class SupabaseGameRepository implements GameRepository {
         if (error) throw error;
     }
 
-    subscribe( code: string, listener: (game: Game | null) => void ): () => void {
-        const roomCode = code.trim().toUpperCase();
+    subscribe( code: string, onUpdate: (game: Game | null) => void ) {
+        const normalizedCode = code.trim().toUpperCase();
 
         const channel = supabase
-            .channel(`game:${roomCode}`)
-            .on(
-            "postgres_changes",
+            .channel(`waiting-room-${normalizedCode}`).on( "postgres_changes",
             {
-                event: "*",
+                event: "UPDATE",
                 schema: "public",
                 table: "games",
-                filter: `code=eq.${roomCode}`,
+                filter: `code=eq.${normalizedCode}`,
             },
-            () => {
-                void this.getByCode(roomCode)
-                .then(listener)
-                .catch(() => listener(null));
+            async () => {
+                try {
+                const updatedGame = await this.getByCode(normalizedCode);
+                onUpdate(updatedGame);
+                } catch (error) {
+                console.error("Failed to refresh game:", error);
+                }
             }
-            )
-            .subscribe();
+            ).subscribe();
 
-        return () => {
-            void supabase.removeChannel(channel);
-        };
-    }
+            return () => {
+                void supabase.removeChannel(channel);
+            };
+        }
 
     private mapArchivedGame(row: { id: string; game_id: string; code: string; reason: ArchivedGame["reason"]; game_ended_at: string; archived_at: string; }): ArchivedGame {
         return {

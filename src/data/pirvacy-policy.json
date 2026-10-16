@@ -1,0 +1,69 @@
+
+{
+  "title": "Privacy Policy",
+  "lastUpdated": "16 October 2026",
+  "intro": "Ponderam is a multiplayer word and category game. This policy explains what information we use, why we use it, and how you can contact us about your privacy.",
+  "sections": [
+    {
+      "heading": "1. Information we use",
+      "paragraphs": [
+        "When you create an account or use Ponderam, we may process your email address through our authentication provider, Supabase, to manage sign-in and your account.",
+        "Your Ponderam profile may contain your username, avatar, total score, coins, streak, reliability information, and game history or identifiers associated with your games.",
+        "We also process information needed to operate multiplayer games, such as room details, answers, submissions, and marking results."
+      ]
+    },
+    {
+      "heading": "2. Public profiles and leaderboard",
+      "paragraphs": [
+        "Ponderam's public leaderboard displays player usernames, avatars, and total scores. This information may be visible to visitors who are not signed in.",
+        "Do not choose a username or avatar that contains personal information you do not want to make public."
+      ]
+    },
+    {
+      "heading": "3. How we use information",
+      "paragraphs": [
+        "We use information to operate accounts, run games, calculate and display scores, maintain the leaderboard, support multiplayer features, and protect the reliability of gameplay.",
+        "We do not intentionally display account email addresses on the public leaderboard."
+      ]
+    },
+    {
+      "heading": "4. Service providers and storage",
+      "paragraphs": [
+        "Ponderam uses Supabase for database and authentication services. Information needed to provide these features is processed through that service.",
+        "Information may be stored and processed by our service providers in accordance with their terms and privacy practices. We will update this policy if our data practices materially change."
+      ]
+    },
+    {
+      "heading": "5. Retention and security",
+      "paragraphs": [
+        "We retain information for as long as reasonably necessary to provide the service, maintain game records, meet applicable legal obligations, and address disputes or abuse.",
+        "We use appropriate measures to protect information, but no online service can guarantee absolute security."
+      ]
+    },
+    {
+      "heading": "6. Your choices and rights",
+      "paragraphs": [
+        "You can contact us to ask about your personal information, request access or correction, or ask for deletion where applicable law provides that right.",
+        "Some information may need to be retained for legitimate operational or legal reasons. We may need to verify your identity before acting on a request."
+      ]
+    },
+    {
+      "heading": "7. Children's privacy",
+      "paragraphs": [
+        "Ponderam is not intended for children who are not permitted to use the service under applicable law. If you believe a child has provided personal information inappropriately, please contact us."
+      ]
+    },
+    {
+      "heading": "8. Changes to this policy",
+      "paragraphs": [
+        "We may update this policy as Ponderam develops. The latest version and its update date will be published on this page."
+      ]
+    },
+    {
+      "heading": "9. Contact",
+      "paragraphs": [
+        "For privacy questions or requests, email hello@ponderam.com."
+      ]
+    }
+  ]
+}

@@ -1,37 +1,18 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
-import type { FormEvent } from "react";
-import {
-  ArrowRight,
-  CircleHelp,
-  Clock3,
-  Globe2,
-  Plus,
-  RefreshCw,
-  Search,
-  Users,
-  X,
-} from "lucide-react";
+import { ArrowRight, CircleHelp, Clock3, Globe2, Plus, RefreshCw, Search, Users, X,} from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 import type { Game } from "../models/Game";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { useUser } from "../providers/UserProvider";
-import { gameRepository } from "../repo";
+import { gameRepository, userRepository } from "../repo";
+import Pagination from "../components/Pagination";
 
-function GameCard({
-  game,
-  onDetails,
-  onJoin,
-}: Readonly<{
-  game: Game;
-  onDetails: (game: Game) => void;
-  onJoin: (game: Game) => void;
-}>) {
-  const playerCount = game.participants.filter(
-    (participant) => participant.leftAt === null
-  ).length;
+function GameCard({  game,  onDetails,  onJoin,}: Readonly<{ game: Game; onDetails: (game: Game) => void; onJoin: (game: Game) => void; }>) {
+
+  const playerCount = game.participants.filter( (participant) => participant.leftAt === null).length;
   const isFull = playerCount >= game.details.maxPlayers;
 
   const categories = game.details.selectedCategories
@@ -94,6 +75,11 @@ export default function GlobalLobby() {
   const navigate = useNavigate();
   const { user, loading } = useUser();
 
+  const PAGE_SIZE = 6;
+  const [currentPage, setCurrentPage] = useState(1);
+
+  
+
   const refreshGames = useCallback(async () => {
     try {
       const result = await gameRepository.listPublicWaitingGames();
@@ -137,6 +123,17 @@ export default function GlobalLobby() {
     [games]
   );
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search, refreshGames]);
+
+  const totalPages = Math.ceil(openGames.length / PAGE_SIZE);
+
+  const paginatedGames = openGames.slice(
+    (currentPage - 1) * PAGE_SIZE,
+    currentPage * PAGE_SIZE
+  );
+
   const filteredGames = useMemo(() => {
     const query = search.trim().toLowerCase();
 
@@ -149,9 +146,7 @@ export default function GlobalLobby() {
         ...game.participants
           .filter((participant) => participant.leftAt === null)
           .map((participant) => participant.username),
-      ]
-        .join(" ")
-        .toLowerCase();
+      ].join(" ").toLowerCase();
 
       return searchableText.includes(query);
     });
@@ -161,54 +156,55 @@ export default function GlobalLobby() {
     void navigate("/create-game");
   }
 
-  function handleJoin(game: Game) {
-    const activePlayers = game.participants.filter(
-      (participant) => participant.leftAt === null
-    ).length;
-
-    if (activePlayers >= game.details.maxPlayers) {
-      setNotice("This game is full.");
-      return;
-    }
-
-    if (game.status !== "waiting") {
-      setNotice("This game is no longer accepting players.");
-      return;
-    }
-
-    void navigate(`/game/${game.code}`);
-  }
-
-  async function handleJoinWithCode(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-
-    const code = joinCode.trim().toUpperCase();
-
-    if (!/^[A-Z0-9]{7}$/.test(code)) {
-      setNotice("Enter a valid seven-character game code.");
-      return;
-    }
-
-    setShowCodeModal(false);
-    setJoinCode("");
-
+  async function handleJoin(code: string) {
     try {
-      const game = await gameRepository.getByCode(code);
+      if (!user) {
+        setNotice("Please sign in to join a game.");
+        return;
+      }
+
+      const normalizedCode = code.trim().toUpperCase();
+
+      if (!/^[A-Z0-9]{7}$/.test(normalizedCode)) {
+        setNotice("Enter a valid seven-character game code.");
+        return;
+      }
+
+      const game = await gameRepository.getByCode(normalizedCode);
 
       if (!game) {
-        setNotice(`No game was found with code ${code}.`);
+        setNotice(`No game was found with code ${normalizedCode}.`);
         return;
       }
 
-      if (game.status !== "waiting" || game.hasStarted || game.hasEnded) {
-        setNotice(`Game ${code} is no longer accepting players.`);
+      if (
+        game.status !== "waiting" ||
+        game.hasStarted ||
+        game.hasEnded
+      ) {
+        setNotice("This game is no longer accepting players.");
         return;
       }
 
-      void navigate(`/game/${game.code}`);
+      const activePlayers = game.participants.filter( (participant) => participant.leftAt === null ).length;
+
+      if (activePlayers >= game.details.maxPlayers) {
+        setNotice("This game is full.");
+        return;
+      }
+
+      const participant = userRepository.createParticipant(user);
+
+      await gameRepository.join(game.code, participant);
+
+      setShowCodeModal(false);
+      setJoinCode("");
+
+      navigate(`/game/${game.code}`);
     } catch (error) {
-      console.error("Could not find game:", error);
-      setNotice("Could not look up that game. Please try again.");
+      console.error("Could not join game:", error);
+      setNotice( error instanceof Error ? error.message : "Could not join the game. Please try again.");
+      
     }
   }
 
@@ -270,8 +266,7 @@ export default function GlobalLobby() {
                   <button
                     type="button"
                     onClick={() => setSearch("")}
-                    aria-label="Clear search"
-                  >
+                    aria-label="Clear search">
                     <X size={18} />
                   </button>
                 )}
@@ -280,8 +275,7 @@ export default function GlobalLobby() {
               <button
                 type="button"
                 onClick={handleCreateGame}
-                className="flex items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3 font-bold text-white transition hover:opacity-90"
-              >
+                className="flex items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3 font-bold text-white transition hover:opacity-90">
                 <Plus size={20} />
                 Create Game
               </button>
@@ -289,8 +283,7 @@ export default function GlobalLobby() {
               <button
                 type="button"
                 onClick={() => setShowCodeModal(true)}
-                className="rounded-xl bg-surface px-5 py-3 font-bold text-text transition hover:bg-bg"
-              >
+                className="rounded-xl bg-surface px-5 py-3 font-bold text-text transition hover:bg-bg">
                 Join with Code
               </button>
             </div>
@@ -311,8 +304,7 @@ export default function GlobalLobby() {
             <button
               type="button"
               onClick={() => void refreshGames()}
-              className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-bold text-text transition hover:bg-bg"
-            >
+              className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-bold text-text transition hover:bg-bg">
               <RefreshCw size={17} />
               Refresh
             </button>
@@ -321,19 +313,19 @@ export default function GlobalLobby() {
           {notice && (
             <div
               role="status"
-              className="page-transition mb-4 rounded-xl border border-border bg-bg px-4 py-3 text-sm text-text"
-            >
+              className="page-transition mb-4 rounded-xl border border-border bg-bg px-4 py-3 text-sm text-text">
               {notice}
             </div>
           )}
 
+          
           {gamesLoading ? (
             <p className="py-10 text-center text-muted">
               Loading open games...
             </p>
           ) : (
             <div className="flex flex-col gap-3">
-              {filteredGames.map((game, index) => (
+              {paginatedGames.map((game, index) => (
                 <div
                   key={game.id}
                   className={
@@ -347,7 +339,7 @@ export default function GlobalLobby() {
                   <GameCard
                     game={game}
                     onDetails={setSelectedGame}
-                    onJoin={handleJoin}
+                    onJoin={(game) => void handleJoin(game.code)}
                   />
                 </div>
               ))}
@@ -370,9 +362,25 @@ export default function GlobalLobby() {
               </button>
             </div>
           )}
+
+          {!gamesLoading && filteredGames.length > 0 && (
+            <div className="mt-6">
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={setCurrentPage}
+              />
+              <p className="mt-3 text-center text-xs text-muted">
+                Showing {((currentPage - 1) * PAGE_SIZE) + 1}–
+                {Math.min(currentPage * PAGE_SIZE, filteredGames.length)} of{" "}
+                {filteredGames.length} games
+              </p>
+            </div>
+          )}
+
         </section>
 
-        <section className="mt-8 flex flex-col gap-4 rounded-2xl border border-border bg-surface p-5 sm:flex-row sm:items-center sm:justify-between sm:p-7">
+        <section className="mt-12 flex flex-col gap-4 rounded-2xl border border-border bg-surface p-5 sm:flex-row sm:items-center sm:justify-between sm:p-7">
           <div className="flex items-start gap-3">
             <div className="rounded-xl bg-bg p-3 text-accent">
               <CircleHelp size={24} />
@@ -388,8 +396,7 @@ export default function GlobalLobby() {
           <button
             type="button"
             onClick={() => setShowCodeModal(true)}
-            className="flex items-center justify-center gap-2 rounded-xl border border-border px-5 py-3 font-bold transition hover:border-accent hover:text-accent"
-          >
+            className="flex items-center justify-center gap-2 rounded-xl border border-border px-5 py-3 font-bold transition hover:border-accent hover:text-accent">
             Enter game code <ArrowRight size={17} />
           </button>
         </section>
@@ -400,15 +407,13 @@ export default function GlobalLobby() {
       {showCodeModal && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-dark/50 p-4"
-          onClick={() => setShowCodeModal(false)}
-        >
+          onClick={() => setShowCodeModal(false)}>
           <section
             role="dialog"
             aria-modal="true"
             aria-labelledby="join-code-title"
             className="page-transition w-full max-w-md rounded-2xl bg-surface p-6 shadow-xl sm:p-8"
-            onClick={(event) => event.stopPropagation()}
-          >
+            onClick={(event) => event.stopPropagation()}>
             <div className="mb-5 flex items-start justify-between gap-4">
               <div>
                 <h2 id="join-code-title" className="text-xl font-black">
@@ -423,17 +428,19 @@ export default function GlobalLobby() {
                 type="button"
                 onClick={() => setShowCodeModal(false)}
                 aria-label="Close dialog"
-                className="rounded-lg p-2 text-muted hover:bg-bg hover:text-text"
-              >
+                className="rounded-lg p-2 text-muted hover:bg-bg hover:text-text"    >
                 <X size={20} />
               </button>
             </div>
 
-            <form onSubmit={(event) => void handleJoinWithCode(event)}>
+            <form
+              onSubmit={(event) => {
+                event.preventDefault();
+                void handleJoin(joinCode);
+              }}>
               <label
                 htmlFor="game-code"
-                className="mb-2 block text-sm font-bold"
-              >
+                className="mb-2 block text-sm font-bold">
                 Game code
               </label>
               <input
@@ -452,8 +459,7 @@ export default function GlobalLobby() {
 
               <button
                 type="submit"
-                className="mt-4 w-full rounded-xl bg-accent px-5 py-3 font-bold text-white transition hover:opacity-90"
-              >
+                className="mt-4 w-full rounded-xl bg-accent px-5 py-3 font-bold text-white transition hover:opacity-90">
                 Find Game
               </button>
             </form>
@@ -464,8 +470,7 @@ export default function GlobalLobby() {
       {selectedGame && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-dark/50 p-4"
-          onClick={() => setSelectedGame(null)}
-        >
+          onClick={() => setSelectedGame(null)}>
           <section
             role="dialog"
             aria-modal="true"
@@ -526,15 +531,14 @@ export default function GlobalLobby() {
               onClick={() => {
                 const game = selectedGame;
                 setSelectedGame(null);
-                handleJoin(game);
+                handleJoin(game.code);
               }}
               disabled={
                 selectedGame.participants.filter(
                   (participant) => participant.leftAt === null
                 ).length >= selectedGame.details.maxPlayers
               }
-              className="mt-5 w-full rounded-xl bg-accent px-5 py-3 font-bold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
-            >
+              className="mt-5 w-full rounded-xl bg-accent px-5 py-3 font-bold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40">
               Join Game
             </button>
           </section>
