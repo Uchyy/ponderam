@@ -1,0 +1,142 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Bitcount:wght@100..900&family=DM+Sans:wght@400;500;600;700;800&family=Lora:ital,wght@0,400..700;1,400..700&family=Mozilla+Headline:wght@200..700&family=Unica+One&display=swap');
+
+@import "tailwindcss";
+
+/* =========================
+   Ponderam Design System
+   Tailwind CSS v4
+   ========================= */
+
+/* Base styles */
+:root {
+  font-family: "DM Sans", sans-serif;
+  color: #111111;
+  background: #ffffff;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  --pink: #f52d91;
+  --ink: #111111;
+  --muted: #595959;
+  --paper: #ffffff;
+  --line: #e8e8e8;
+}
+
+/* Typography */
+.unica-one-regular {
+  font-family: "Unica One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.lora-regular {
+  font-family: "Lora", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* Tailwind theme tokens */
+@theme {
+  --color-accent: var(--pink);
+  --color-pink: var(--pink);
+
+  --color-bg: var(--paper);
+  --color-surface: var(--paper);
+  --color-dark: var(--ink);
+
+  --color-text: var(--ink);
+  --color-muted: var(--muted);
+  --color-border: var(--line);
+
+  --font-heading: "Mozilla Headline", sans-serif;
+  --font-unica: "Unica One", sans-serif;
+  --font-body: "DM Sans", sans-serif;
+  --font-editorial: "Lora", serif;
+  --font-mono: "Bitcount", monospace;
+}
+
+
+/* Global defaults */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: var(--pink);
+  color: #ffffff;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+
+/* Simple page transition */
+.page-transition {
+  animation: pageFadeIn 250ms ease-out;
+}
+
+.delay-100 {
+  animation-delay: 150ms;
+  animation-fill-mode: both;
+}
+
+.delay-200 {
+  animation-delay: 300ms;
+  animation-fill-mode: both;
+}
+
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-transition {
+    animation: none;
+  }
+}

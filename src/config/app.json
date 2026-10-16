@@ -1,0 +1,22 @@
+
+{
+  "app": {
+    "name": "Ponderam",
+    "domain": "ponderam.com",
+    "description": "A multiplayer word and category game.",
+    "url": "https://ponderam.com"
+  },
+  "contact": {
+    "supportEmail": "hello@ponderam.com"
+  },
+  "urls": {
+    "home": "/",
+    "lobby": "/lobby",
+    "profile": "/profile",
+    "authCallback": "/auth/callback"
+  },
+  "authentication": {
+    "providers": ["google", "email"],
+    "defaultRedirect": "/lobby"
+  }
+}
