@@ -84,14 +84,14 @@ export const siteContent = {
         title: "Full marks",
         description:
           "Award full marks when the answer is valid, fits the category and begins with the required letter.",
-        score: "1 point",
+        score: "10 point",
       },
       {
         icon: "partial",
         title: "Partial marks",
         description:
           "Award half a point when an answer is a reasonable partial match or has a minor spelling mistake that still makes the intended answer clear.",
-        score: "0.5 points",
+        score: "5 points",
       },
       {
         icon: "incorrect",

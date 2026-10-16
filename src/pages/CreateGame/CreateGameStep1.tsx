@@ -136,8 +136,7 @@ export default function CreateGameStep1 ( {visibility, setVisibility, maxPlayers
                   type="button"
                   onClick={() => {
                     const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-                    const randomChar =
-                      alphabet[Math.floor(Math.random() * alphabet.length)];
+                    const randomChar = alphabet[Math.floor(Math.random() * alphabet.length)];
 
                     setSelectedChar(randomChar);
                   }}
@@ -157,13 +156,6 @@ export default function CreateGameStep1 ( {visibility, setVisibility, maxPlayers
                   setSelectedChar("ABCDEFGHIJKLMNOPQRSTUVWXYZ"[index])
                 }
                 formatValue={(index) => "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[index]}
-                randomise={() => {
-                  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-                  const randomChar =
-                    alphabet[Math.floor(Math.random() * alphabet.length)];
-
-                  setSelectedChar(randomChar);
-                }}
               />
             </div>
 

@@ -12,18 +12,20 @@ import GameGateway from "./pages/GameFlow/GameGateway";
 import GameUnavailable from "./pages/GameFlow/GameUnavailable";
 import AuthCallback from "./pages/AuthCallback";
 
-export const router = createBrowserRouter([
-  { path: "/", element: <Home /> },
-  { path: "/leaderboard", element: <LeaderBoard /> },
-  { path: "/profile", element: <Profile /> },
-  { path: "/create-account", element: <CreateAccount /> },
-  { path: "/lobby", element: <GlobalLobby /> },
-
-  { path: "/create-game", element: <CreateGame /> }, 
-  { path: "/game/:code", element: <GameGateway /> },
-  { path: "/game/:code/waiting", element: <WaitingRoom /> },
-  { path: "/game-unavailable", element: <GameUnavailable /> },
-  
-  { path: "/auth/callback", element: <AuthCallback />,},
-
-]);
+export const router = createBrowserRouter(
+  [
+    { path: "/", element: <Home /> },
+    { path: "/leaderboard", element: <LeaderBoard /> },
+    { path: "/profile", element: <Profile /> },
+    { path: "/create-account", element: <CreateAccount /> },
+    { path: "/lobby", element: <GlobalLobby /> },
+    { path: "/create-game", element: <CreateGame /> },
+    { path: "/game/:code", element: <GameGateway /> },
+    { path: "/game/:code/waiting", element: <WaitingRoom /> },
+    { path: "/game-unavailable", element: <GameUnavailable /> },
+    { path: "/auth/callback", element: <AuthCallback /> },
+  ],
+  {
+    basename: import.meta.env.BASE_URL,
+  }
+);

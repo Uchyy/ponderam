@@ -7,10 +7,9 @@ interface StepperProps {
   step?: number;
   onChange: (value: number) => void;
   formatValue?: (value: number) => string;
-  randomise?: () => void;
 }
 
-export default function Stepper({ label, value, min, max, step = 1, onChange, formatValue = String, randomise,}: Readonly<StepperProps>) {
+export default function Stepper({ label, value, min, max, step = 1, onChange, formatValue = String,}: Readonly<StepperProps>) {
   return (
     <div className="flex items-center gap-3">
       <button

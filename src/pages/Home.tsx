@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { ArrowRight, Play, Users, Timer, Trophy, Heart, Layers, Hourglass, PencilLine, Star, ChevronRight,  Globe2, } from "lucide-react";
+import { ArrowRight, Play, Users, Timer, Trophy, Heart, Layers, Hourglass, PencilLine, Star,  Globe2, } from "lucide-react";
 
 import Footer from "../components/Footer.jsx";
 import { Link } from "react-router-dom";

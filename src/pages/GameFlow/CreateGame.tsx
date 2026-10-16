@@ -18,7 +18,6 @@ export default function CreateGame() {
 
   const [step, setStep] = useState(1);
   const [maxPlayers, setMaxPlayers] = useState(6);
-  const [code, setCode] = useState<string>("");
   const [startAutomatic, setStartAutomatic] = useState<boolean>(true);
   const [visibility, setVisibility] = useState<GameVisibility>("public");
   const [duration, setDuration] = useState(60);
@@ -92,17 +91,10 @@ export default function CreateGame() {
         },
       });
 
-      setCode(game.code);
-
-      navigate(`/game/${game.code}`, {
-        state: { game },
-      });
+      navigate(`/game/${game.code}`, {state: { game }, });
     } catch (error) {
       console.error("Could not create game:", error);
-      setCreateError(
-        error instanceof Error
-          ? error.message
-          : "Something went wrong while creating the game."
+      setCreateError( error instanceof Error ? error.message : "Something went wrong while creating the game."
       );
     } finally {
       setCreating(false);
