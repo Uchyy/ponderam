@@ -1,4 +1,6 @@
 
+import { Link } from "react-router-dom";
+
 const backgrounds = {
   transparent: "bg-transparent",
   white: "bg-white",
@@ -8,21 +10,22 @@ const backgrounds = {
 
 type BrandBackground = keyof typeof backgrounds;
 
-export default function Brand({ className = "", iconSize = 36, variant = "title", background = "transparent",
- }: Readonly<{ className?: string,  iconSize?: number; variant?: "title" | "icon"; background?: BrandBackground; }>) {
+export default function Brand({ className = "",  iconSize = 36,  variant = "title",  background = "transparent",}: Readonly<{
+  className?: string; iconSize?: number; variant?: "title" | "icon"; background?: BrandBackground; }>) {
+  const imagePath =  variant === "title"  ? "assets/app-title.png"  : "assets/ponderam-icon.png";
+
   return (
-    <a
-      href="/"
+    <Link
+      to="/"
       aria-label="Ponderam home"
-      className={`inline-flex items-center rounded-lg ${backgrounds[background] ?? backgrounds.transparent} ${className}`}>
-        
+      className={`inline-flex items-center rounded-lg ${backgrounds[background]} ${className}`}>
       <img
-        src={variant === "title" ? "/assets/app-title.png" : "/assets/ponderam-icon.png"}
+        src={`${import.meta.env.BASE_URL}${imagePath}`}
         alt="Ponderam"
         width={variant === "title" ? iconSize * 4 : iconSize}
         height={iconSize * 2}
         className="h-auto max-w-full object-contain"
       />
-    </a>
+    </Link>
   );
 }

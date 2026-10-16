@@ -106,7 +106,7 @@ export default function CreateGame() {
     <main
       className="page-transition min-h-screen bg-bg px-5 py-8 text-text"
       style={{
-        backgroundImage: "url('/images/ponderam-hero-background.png')",
+        backgroundImage: `url("${import.meta.env.BASE_URL}images/ponderam-hero-background.png")`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}>
