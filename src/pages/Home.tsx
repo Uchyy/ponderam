@@ -114,7 +114,7 @@ const [activeDialog, setActiveDialog] = useState< "features" | "howToPlay" | "ma
           <div className="relative mx-auto w-full max-w-xl">
             <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] bg-[#171717] sm:aspect-[5/4]">
               <img
-                src="/images/ponderam-hero-background.png" 
+                src={`${import.meta.env.BASE_URL}images/ponderam-hero-background.png`}
                 alt="Friends enjoying a game together"
                 className="absolute inset-0 h-full w-full object-cover"
                 onError={(event) => {

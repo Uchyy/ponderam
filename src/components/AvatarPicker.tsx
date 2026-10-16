@@ -25,7 +25,7 @@ export default function AvatarPicker({ selectedAvatar, onSelect, }: Readonly<Ava
                 : "border-gray-200 bg-white hover:border-pink-300"
             }`}>
             <img
-              src={avatar.file}
+              src={`${import.meta.env.BASE_URL}${avatar.file.replace(/^\/+/, "")}`}
               alt={`Letter ${avatar.letter} avatar`}
               className="h-full w-full object-contain"
             />

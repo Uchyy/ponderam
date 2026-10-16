@@ -2,19 +2,20 @@
 import { supabase } from "../../utils/supabase";
 import type { AuthRepository } from "../AuthRepository";
 
-function getCallbackUrl(returnTo: string): string {
+export function getCallbackUrl(returnTo = "/lobby") {
+  const baseUrl = import.meta.env.BASE_URL;
   const callbackUrl = new URL(
-    "/auth/callback",
+    `${baseUrl}auth/callback`,
     window.location.origin
   );
 
-  // Preserve the destination through authentication.
   callbackUrl.searchParams.set("returnTo", returnTo);
 
   return callbackUrl.toString();
 }
 
 export const supabaseAuthRepository: AuthRepository = {
+ 
   async signInWithGoogle(returnTo) {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",

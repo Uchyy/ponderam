@@ -235,10 +235,8 @@ export default function GlobalLobby() {
         <section
           className="page-transition relative overflow-hidden rounded-3xl bg-dark bg-cover bg-center"
           style={{
-            backgroundImage:
-              "linear-gradient(90deg, rgb(17 17 17 / 85%), rgb(17 17 17 / 25%)), url('/images/ponderam-hero-background.png')",
-          }}
-        >
+            backgroundImage: `linear-gradient(90deg, rgb(17 17 17 / 85%), rgb(17 17 17 / 25%)), url("${import.meta.env.BASE_URL}images/ponderam-hero-background.png")`,
+          }}>
           <div className="relative z-10 flex min-h-64 flex-col justify-center gap-8 p-6 sm:p-10 lg:min-h-80 lg:p-14">
             <div className="max-w-xl">
               <p className="mb-3 text-sm font-bold uppercase tracking-[0.2em] text-white/80">

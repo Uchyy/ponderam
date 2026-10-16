@@ -152,7 +152,7 @@ export default function CreateAccount() {
 
   return (
     <main className="page-transition delay min-h-screen bg-white px-5 py-8 text-text" style={{
-      backgroundImage: "url('/images/ponderam-hero-background.png')",
+      backgroundImage: `url("${import.meta.env.BASE_URL}images/ponderam-hero-background.png")`,
     }}>
       <div className="mx-auto flex min-h-[85vh] w-full max-w-3xl bg-white/45 p-5 flex-col">
         

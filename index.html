@@ -17,6 +17,22 @@
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <script  type="module" src="/src/main.jsx">
+      (function (location) {
+        if (location.search[1] === "/") {
+          const decoded = location.search
+            .slice(1)
+            .split("&")
+            .map((part) => part.replace(/~and~/g, "&"))
+            .join("?");
+
+          window.history.replaceState(
+            null,
+            null,
+            location.pathname.replace(/\/$/, "") + decoded + location.hash
+          );
+        }
+      })(window.location);
+    </script>
   </body>
 </html>

@@ -23,7 +23,7 @@ export default function LetterAvatar({ letter, className = "", h = 14, w = 18, }
       }}
     >
       <img
-        src={avatar.file}
+        src={`${import.meta.env.BASE_URL}${avatar.file.replace(/^\/+/, "")}`}
         alt={`${avatar.letter} avatar`}
         className="h-full w-full rounded-full object-contain object-center"
       />
